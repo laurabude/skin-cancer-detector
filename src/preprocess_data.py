@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from PIL import Image  # Folosim PIL în loc de load_img și img_to_array
 import os
 import cv2
 import albumentations as A
@@ -8,13 +7,11 @@ from albumentations.pytorch import ToTensorV2
 
 IMG_SIZE = 128
 
-# Încărcare metadata
 def load_metadata(metadata_path, image_dir):
     metadata = pd.read_csv(metadata_path)
     metadata['path'] = metadata['image'].map(lambda x: os.path.join(image_dir, f"{x}.jpg"))
     return metadata
 
-# Definim transformările de augmentare
 transform = A.Compose([
     A.HorizontalFlip(p=0.5),  # Flip orizontal
     A.RandomBrightnessContrast(p=0.2),  # Ajustare luminozitate/contrast

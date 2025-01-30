@@ -16,11 +16,17 @@ metadata = load_metadata(metadata_path, image_dir)
 X_test = preprocess_images(metadata['path'])
 
 # Generate labels using the columns MEL, NV, BCC, AKIEC, BKL, DF, VASC
+# MEL – Melanom
+# NV – Nevus (aluniță benignă)
+# BCC – Carcinom bazocelular
+# AKIEC – Carcinom cu celule scuamoase (actinic keratosis / intraepithelial carcinoma)
+# BKL – Leziuni benigne de tip keratoză
+# DF – Dermatofibrom
+# VASC – Leziuni vasculare
+
 y_test = preprocess_labels(metadata)
 
-# Evaluate
 predictions = model.predict(X_test)
 predicted_classes = np.argmax(predictions, axis=1)
 
-# Display results
 print(classification_report(np.argmax(y_test, axis=1), predicted_classes))
